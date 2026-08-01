@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create beautiful digital flower bouquets and send them to your loved ones with a heartfelt letter. Free, cute, and shareable!">
+  <title>Petal Post — Digital Bouquets for Your Loved Ones 💐</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Sacramento&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Floating Petals Background -->
+  <div class="floating-petals" id="floatingPetals"></div>
+
+  <!-- ========== LANDING / BUILDER VIEW ========== -->
+  <main class="app" id="appBuilder">
+
+    <!-- Hero Section -->
+    <header class="hero" id="heroSection">
+      <div class="hero-content">
+        <div class="hero-icon">💐</div>
+        <h1 class="hero-title">Petal Post</h1>
+        <p class="hero-subtitle">Craft a beautiful digital bouquet &amp; send it with love</p>
+        <button class="btn btn-primary btn-glow" id="btnStartCreating">
+          <span>Start Creating</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+      <div class="hero-flowers">
+        <span class="hero-flower hf-1">🌸</span>
+        <span class="hero-flower hf-2">🌷</span>
+        <span class="hero-flower hf-3">🌻</span>
+        <span class="hero-flower hf-4">🌹</span>
+        <span class="hero-flower hf-5">🌺</span>
+        <span class="hero-flower hf-6">💮</span>
+      </div>
+    </header>
+
+    <!-- Builder Section -->
+    <section class="builder" id="builderSection">
+      <!-- Progress Steps -->
+      <div class="progress-bar">
+        <div class="progress-step active" data-step="1">
+          <div class="step-circle">1</div>
+          <span class="step-label">Pick Flowers</span>
+        </div>
+        <div class="progress-line"><div class="progress-line-fill" id="progressFill1"></div></div>
+        <div class="progress-step" data-step="2">
+          <div class="step-circle">2</div>
+          <span class="step-label">Write Letter</span>
+        </div>
+        <div class="progress-line"><div class="progress-line-fill" id="progressFill2"></div></div>
+        <div class="progress-step" data-step="3">
+          <div class="step-circle">3</div>
+          <span class="step-label">Send</span>
+        </div>
+      </div>
+
+      <!-- Step 1: Pick Flowers -->
+      <div class="step-panel active" id="step1">
+        <h2 class="step-title">🌸 Pick &amp; Arrange Your Flowers</h2>
+        <p class="step-desc">Tap flowers to add them. 🖐️ <strong>Drag flowers &amp; wrap</strong> to tuck flowers inside!</p>
+        
+        <div class="flower-picker" id="flowerPicker">
+          <!-- Flowers injected by JS -->
+        </div>
+
+        <div class="bouquet-preview-area">
+          <div class="preview-header">
+            <h3 class="preview-label">Your Bouquet</h3>
+            <span class="drag-hint">💡 Tip: Drag flowers or wrap to reposition</span>
+          </div>
+          <div class="bouquet-canvas" id="bouquetCanvas">
+            <div class="bouquet-placeholder" id="bouquetPlaceholder">
+              <span>✨</span>
+              <p>Tap flowers above to start building!</p>
+            </div>
+
+            <!-- Back Wrapper Layer (Behind Flowers) -->
+            <div class="wrap-png-back-container" id="wrapBackContainer">
+              <img id="wrapImgBack" class="wrap-png-back" src="assets/pink_wrap.png" alt="Bouquet Wrapper Back" draggable="false">
+            </div>
+
+            <!-- Flowers Layer (In Middle) -->
+            <div class="bouquet-stems" id="bouquetStems"></div>
+            
+            <!-- Front Wrapper Pocket Layer (In Front of Stems, creating 3D pocket) -->
+            <div class="bouquet-wrap draggable-wrap" id="bouquetWrap" title="Drag to adjust wrap position">
+              <img id="wrapImgFront" class="wrap-png-front" src="assets/pink_wrap.png" alt="Bouquet Wrapper Front Pocket" draggable="false">
+            </div>
+          </div>
+
+          <div class="bouquet-actions">
+            <button class="btn btn-ghost" id="btnClearBouquet">Clear All</button>
+            <button class="btn btn-ghost" id="btnResetPositions" title="Reset flower positions">Auto Arrange</button>
+            <span class="flower-count" id="flowerCount">0 / 12 flowers</span>
+          </div>
+        </div>
+
+        <!-- Realistic PNG Wrap Selector -->
+        <div class="wrap-color-picker">
+          <span class="wrap-label">Bouquet Wrapper:</span>
+          <div class="color-options" id="colorOptions">
+            <button class="wrap-style-btn active" data-wrap="pink" title="Pink Satin Tissue Wrap">
+              <img src="assets/pink_wrap.png" alt="Pink Wrap">
+              <span>Pink Satin</span>
+            </button>
+            <button class="wrap-style-btn" data-wrap="kraft" title="Vintage Kraft Cone Paper">
+              <img src="assets/kraft_wrap.png" alt="Kraft Wrap">
+              <span>Vintage Kraft</span>
+            </button>
+            <button class="wrap-style-btn" data-wrap="lavender" title="Lavender Silk Wrap">
+              <img src="assets/lavender_wrap.png" alt="Lavender Wrap">
+              <span>Lavender Silk</span>
+            </button>
+            <button class="wrap-style-btn" data-wrap="mint" title="Mint Fresh Tissue Wrap">
+              <img src="assets/mint_wrap.png" alt="Mint Wrap">
+              <span>Mint Ribbon</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <div></div>
+          <button class="btn btn-primary" id="btnToStep2" disabled>
+            Next: Write Letter
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Write Letter -->
+      <div class="step-panel" id="step2">
+        <h2 class="step-title">💌 Write Your Letter</h2>
+        <p class="step-desc">Add a heartfelt message to go with your bouquet</p>
+
+        <div class="letter-form">
+          <div class="form-group">
+            <label for="senderName">Your Name</label>
+            <input type="text" id="senderName" placeholder="e.g. Sarah" maxlength="50" class="input-cute">
+          </div>
+          <div class="form-group">
+            <label for="recipientName">Recipient's Name</label>
+            <input type="text" id="recipientName" placeholder="e.g. Mom" maxlength="50" class="input-cute">
+          </div>
+          <div class="form-group">
+            <label for="letterContent">Your Message</label>
+            <div class="letter-paper">
+              <textarea id="letterContent" placeholder="Dear Mom,&#10;&#10;I just wanted to say thank you for everything you do. You make the world a brighter place! 🌻&#10;&#10;With all my love..." maxlength="2000" rows="8"></textarea>
+              <div class="letter-char-count"><span id="charCount">0</span> / 2000</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-ghost" id="btnBackToStep1">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button class="btn btn-primary" id="btnToStep3">
+            Preview &amp; Send
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Preview & Send -->
+      <div class="step-panel" id="step3">
+        <h2 class="step-title">✨ Preview &amp; Send</h2>
+        <p class="step-desc">Here's what your loved one will see!</p>
+
+        <div class="final-preview">
+          <div class="preview-card">
+            <div class="preview-bouquet-mini" id="previewBouquetMini"></div>
+            <div class="preview-letter-mini">
+              <p class="preview-to" id="previewTo"></p>
+              <p class="preview-msg" id="previewMsg"></p>
+              <p class="preview-from" id="previewFrom"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="send-area">
+          <button class="btn btn-primary btn-glow btn-large" id="btnGenerateLink">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Generate Shareable Link
+          </button>
+          
+          <div class="link-result" id="linkResult" style="display:none">
+            <div class="link-box">
+              <input type="text" id="shareLink" readonly class="input-cute">
+              <button class="btn btn-icon" id="btnCopyLink" title="Copy link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+            </div>
+            <p class="link-hint">Share this link with your loved one! 💕</p>
+            <div class="copied-toast" id="copiedToast">Copied to Clipboard! 💖</div>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn btn-ghost" id="btnBackToStep2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            Back
+          </button>
+          <button class="btn btn-ghost" id="btnStartOver">Start Over</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== RECEIVER VIEW ========== -->
+  <main class="app receiver-app" id="appReceiver" style="display:none">
+    <div class="receiver-container">
+      <!-- Envelope Animation -->
+      <div class="envelope-scene" id="envelopeScene">
+        <div class="envelope" id="envelope">
+          <div class="envelope-back"></div>
+          <div class="envelope-letter" id="envelopeLetter">
+            <p>💌</p>
+          </div>
+          <div class="envelope-front"></div>
+          <div class="envelope-flap"></div>
+        </div>
+        <p class="envelope-hint">Tap envelope to open 💌</p>
+      </div>
+
+      <!-- Revealed Content -->
+      <div class="reveal-content" id="revealContent" style="display:none">
+        <div class="reveal-header">
+          <h2 class="reveal-title">A bouquet for you, <span id="revealRecipient"></span> 💐</h2>
+        </div>
+        
+        <div class="reveal-bouquet" id="revealBouquet">
+          <div class="bouquet-canvas receiver-bouquet" id="receiverBouquetCanvas">
+            <div class="wrap-png-back-container" id="receiverWrapBackContainer">
+              <img id="receiverWrapImgBack" class="wrap-png-back" src="assets/pink_wrap.png" alt="Bouquet Wrapper Back" draggable="false">
+            </div>
+
+            <div class="bouquet-stems" id="receiverBouquetStems"></div>
+            
+            <div class="bouquet-wrap" id="receiverBouquetWrap">
+              <img id="receiverWrapImgFront" class="wrap-png-front" src="assets/pink_wrap.png" alt="Bouquet Wrapper Front" draggable="false">
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal-letter-container">
+          <div class="reveal-letter" id="revealLetterCard">
+            <div class="letter-decoration top-left">✿</div>
+            <div class="letter-decoration top-right">✿</div>
+            <p class="letter-dear" id="revealDear"></p>
+            <p class="letter-body" id="revealBody"></p>
+            <p class="letter-sign" id="revealSign"></p>
+            <div class="letter-decoration bottom-left">❀</div>
+            <div class="letter-decoration bottom-right">❀</div>
+          </div>
+        </div>
+
+        <div class="reveal-footer">
+          <p>Made with 💖 on <strong>Petal Post</strong></p>
+          <button class="btn btn-primary" id="btnMakeOwn">Make Your Own Bouquet 💐</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
